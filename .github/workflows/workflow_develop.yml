@@ -1,0 +1,41 @@
+name: Checking Tests
+
+on:
+  pull_request:
+    branches:
+      - develop
+      - staging
+
+jobs:
+  test:
+    name: Checking Tests
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 21.x
+
+      - name: Install dependencies
+        run: npm install
+      
+      - name: Build App
+        run: npm run build
+
+      - name: Start App
+        run : npm run start &
+    
+      - name: Wait for App to be ready
+        run: |
+          sleep 10
+          curl -f http://localhost:3001 || exit 1
+      
+      - name: Run vitest tests
+        run: |
+          sleep 10
+          npm run test
+
