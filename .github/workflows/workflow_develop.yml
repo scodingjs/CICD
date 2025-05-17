@@ -33,6 +33,7 @@ jobs:
         run: |
           sleep 10
           curl -f http://localhost:3000 || exit 1
+          timeout: 60 
       
       - name: Run vitest tests
         run: |
