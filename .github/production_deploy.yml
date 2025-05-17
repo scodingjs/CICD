@@ -1,0 +1,21 @@
+
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      
+      - uses: cypress-io/github-action@v6
+        with:
+            start: echo "skip"
+            wait-on: 'https://cicd-1suy.onrender.com/'
+            command: npm run cypress:e2e
